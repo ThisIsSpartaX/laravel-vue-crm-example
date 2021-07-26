@@ -1,11 +1,11 @@
 # Laravel + Vue.js example users management admin panel
 
-##Sections:
+## Sections:
 - Departments
   
 - Users
 
-##Pages:
+## Pages:
 
 - Home Page: /,
 
