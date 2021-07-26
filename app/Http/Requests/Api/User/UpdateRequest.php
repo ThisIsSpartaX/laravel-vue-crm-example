@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api\User\Requests;
+namespace App\Http\Requests\Api\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,17 +23,17 @@ class UpdateRequest extends FormRequest
      * @return array
      * @throws
      */
-    public function rules()
+    public function rules(): array
     {
-        $rules =  [
-            'name'                  => 'required|string|min:1|max:255',
-            'email'                 => 'required|email|unique:users,email,' . $this->route('id'),
-            'password'              => 'nullable|min:6|max:20|confirmed',
+        $rules = [
+            'name' => 'required|string|min:1|max:255',
+            'email' => 'required|email|unique:users,email,' . $this->route('id'),
+            'password' => 'nullable|min:6|max:20|confirmed',
             'password_confirmation' => 'required_with:password|same:password',
         ];
 
         //Set current user password required
-        if(\Auth::user()->id == $this->id) {
+        if (Auth::user()->id == $this->id) {
             $rules['current_password'] = 'required_with:password';
         }
 
@@ -44,7 +45,7 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'password.required' => 'New password is required',

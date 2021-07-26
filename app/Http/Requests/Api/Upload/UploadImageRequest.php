@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Upload\Requests;
+namespace App\Http\Requests\Api\Upload;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,9 +12,9 @@ class UploadImageRequest extends FormRequest
      * @return array
      * @throws
      */
-    public function rules()
+    public function rules(): array
     {
-        return  [
+        return [
             'image' => 'required|image',
         ];
     }

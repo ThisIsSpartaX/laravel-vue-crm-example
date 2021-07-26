@@ -4,6 +4,7 @@ use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use jeremykenedy\LaravelRoles\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,32 +15,32 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create();
+        $faker = Factory::create();
 
-        $adminRole = Role::whereName('Admin')->first();
+        $adminRole = Role::query()->where('name', 'Admin')->first();
 
         // Seed test admin
         $seededTesterEmail = 'admin@test.loc';
-        $user = User::where('email', '=', $seededTesterEmail)->first();
+        $user = User::query()->where('email', '=', $seededTesterEmail)->first();
         if ($user === null) {
             $user = User::create([
-                'name'                           => $faker->userName,
-                'email'                          => $seededTesterEmail,
-                'password'                       => Hash::make('password')
+                'name' => $faker->userName,
+                'email' => $seededTesterEmail,
+                'password' => Hash::make('password')
             ]);
 
             $user->attachRole($adminRole);
         }
 
         //Create test users
-        $userRole = Role::whereName('User')->first();
+        $userRole = Role::query()->where('name', 'User')->first();
 
         $i = 0;
-        while($i < 15) {
+        while ($i < 15) {
             $user = User::create([
-                'name'                           => $faker->userName,
-                'email'                          => $faker->unique()->safeEmail,
-                'password'                       => Hash::make('password')
+                'name' => $faker->userName,
+                'email' => $faker->unique()->safeEmail,
+                'password' => Hash::make('password')
             ]);
 
             $user->attachRole($userRole);

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Department
@@ -25,18 +26,26 @@ class Department extends Model
 {
     protected $table = 'departments';
 
-    public static function getTableName()
+    public static function getTableName(): string
     {
         return with(new static)->getTable();
     }
 
-    public static function getImageFolder()
+    public static function getImageFolder(): string
     {
         return 'logo';
     }
 
-    public function users()
+    public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, DepartmentUser::getTableName(), 'department_id', 'user_id')->select([User::getTableName() . '.id', User::getTableName() . '.name']);
+        return $this->belongsToMany(
+            User::class,
+            DepartmentUser::getTableName(),
+            'department_id',
+            'user_id'
+        )->select([
+            User::getTableName() . '.id',
+            User::getTableName() . '.name'
+        ]);
     }
 }

@@ -12,9 +12,9 @@ class ImageUploader
      * @param UploadedFile $file
      * @param string $destinationFolder
      * @param string|null $oldFileName
-     * @return string|false
+     * @return string|null
      */
-    public function uploadImage(UploadedFile $file, $destinationFolder, $oldFileName = null)
+    public function uploadImage(UploadedFile $file, string $destinationFolder, ?string $oldFileName = null): ?string
     {
         $disk = Storage::disk('public');
 
@@ -30,7 +30,7 @@ class ImageUploader
         $saveResult = $disk->put($destinationFolder. DIRECTORY_SEPARATOR . $fileName, fopen($file, 'r+'), 'public');
 
         if(!$saveResult) {
-            return false;
+            return null;
         }
 
         //Delete old file if needed

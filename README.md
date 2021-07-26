@@ -1,153 +1,114 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# Laravel + Vue.js example users management admin panel
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+##Sections:
+- Departments
+  
+- Users
 
-## About Laravel
+##Pages:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Home Page: /,
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Login: /login (see admin login and password in UsersTableSeeder),
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Dashboard: /admin,
 
-## Learning Laravel
+- Users list: /admin/users/,
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- User create: /create,
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- User view: /admin/users/:id,
 
-## Laravel Sponsors
+- User edit: /admin/users/:id/edit,
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- Departments list /admin/departments/,
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+- Department create: /admin/departments/create,
 
-## Contributing
+- Department view: /admin/departments/:id,
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Department delete: /admin/departments/:id/edit,
 
-## Code of Conduct
+## Installation
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-
-## Project Installation
+### Install backend
 
 1 Clone project:
 
 `git clone https://github.com/ThisIsSpartaX/laravel-vue-crm-example.git .`
 
-2 Copy .env.example to .env  
+2 Copy .env.example to .env
 
 `cp .env.example .env`
 
-3 Generate APP key
+3 Install vendors:
 
-`php artisan key:generate  `
+`composer install`
 
-4 Create Database
+4 Generate APP key
 
-5 Set database credentials in .env file
+`php artisan key:generate`
 
-6 Install vendors:  
-
-`composer install `
-
-7 Create storage simlink
+5 Create storage simlink
 
 `php artisan storage:link`
 
-8 Create tables:
+6. Create folder for departments images 
+
+`mkdir storage/app/public/logo`
+
+7 Create Database
+
+8 Set database credentials in .env file
+
+9 Create tables:
 
 `php artisan migrate`
 
-9 Fill database 
+10 Fill database
 
 `php artisan db:seed`
 
-10 Create oAutch clients:
+11 Create oAutch clients:
 
 `php artisan passport:install`
 
-11 Set OAuth client id 2 in .env file 
+12 Set OAuth client id 2 in .env file
 
 `PASSWORD_GRAND_CLIENT_ID=2`
 
-12 Copy OAuth secret from client 2 from oauth_clients DB table to .env file
+13 Copy OAuth secret from client 2 from oauth_clients DB table to .env file
  
 `PASSPORT_SECRET=`
 
-13 Install NPM
+### Install frontend
+
+1 Install NPM
 
 `npm install`
 
-14 Compile JavaScript and SCSS
+2 Compile JavaScript and SCSS
 
 `npm run development` or `npm run production` 
 
 or watch in development mode
 
-`npm run watch`
+`npm run watch
 
-15 Create testing env file
+### Project testing
+
+1 Create testing env file
 
 `cp .env.example .env.testing`
 
-16 Fill DB credentials in .env.testing
+2 Fill DB credentials in .env.testing
 
-17 Set OAuth client id 2 in .env.testing file 
+3 Set OAuth client id 2 in .env.testing file
 
 `PASSWORD_GRAND_CLIENT_ID=2 `
 
-_(PASSPORT_SECRET  in .env testing not needed)_
+_(PASSPORT_SECRET in .env testing not needed)_
 
-18 Start tests:
+4 Start tests:
 
 `./vendor/bin/phpunit tests/Unit`

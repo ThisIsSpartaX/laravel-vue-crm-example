@@ -8,7 +8,7 @@ class DepartmentUser extends Model
 {
     protected $table = 'department_users';
 
-    public static function getTableName()
+    public static function getTableName(): string
     {
         return with(new static)->getTable();
     }

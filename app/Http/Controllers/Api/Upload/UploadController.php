@@ -4,18 +4,21 @@ namespace App\Http\Controllers\Api\Upload;
 
 use App\Http\Controllers\Controller;
 use App\Services\Uploader\ImageUploader;
-use App\Http\Controllers\Api\Upload\Requests\UploadImageRequest;
+use App\Http\Requests\Api\Upload\UploadImageRequest;
+use Illuminate\Http\JsonResponse;
 
 class UploadController extends Controller
 {
     /**
+     * Upload image file
+     *
      * @param UploadImageRequest $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function uploadImage(UploadImageRequest $request)
+    public function uploadImage(UploadImageRequest $request): JsonResponse
     {
-        if(!$request->file('image')) {
+        if (!$request->file('image')) {
             return response()->json([
                 'errors' => [
                     'image' => [
@@ -31,9 +34,9 @@ class UploadController extends Controller
 
         $imageUploader = new ImageUploader();
 
-        $fileName = $imageUploader->uploadImage($file,$folder);
+        $fileName = $imageUploader->uploadImage($file, $folder);
 
-        if(!$fileName) {
+        if (!$fileName) {
             return response()->json([
                 'errors' => [
                     'image' => [

@@ -2,26 +2,19 @@
 
 namespace App\Http\Controllers\Api\Department;
 
-use App\Models\User;
 use App\Models\Department;
 use App\Repositories\Department\DepartmentRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Api\Department\Requests\StoreRequest;
-use App\Http\Controllers\Api\Department\Requests\UpdateRequest;
+use App\Http\Requests\Api\Department\StoreRequest;
+use App\Http\Requests\Api\Department\UpdateRequest;
 
 class DepartmentController extends Controller
 {
-    /**
-     * @var DepartmentRepository
-     */
-    public $departments;
+    public DepartmentRepository $departments;
 
-    /**
-     * @var UserRepository
-     */
-    public $users;
+    public UserRepository $users;
 
     public function __construct(DepartmentRepository $departments, UserRepository $users)
     {
@@ -47,7 +40,7 @@ class DepartmentController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function get($id): JsonResponse
+    public function get(int $id): JsonResponse
     {
         $user = $this->departments->newQuery()->with('users')->findOrFail($id);
 
@@ -70,7 +63,7 @@ class DepartmentController extends Controller
         $department->save();
 
         //Check if need add users in department
-        if($request->get('users')) {
+        if ($request->get('users')) {
             foreach ($request->get('users') as $userData) {
                 $user = $this->users->findOrFail($userData['id']);
                 //Add user
@@ -88,8 +81,9 @@ class DepartmentController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function update(UpdateRequest $request, $id): JsonResponse
+    public function update(UpdateRequest $request, int $id): JsonResponse
     {
+        /** @var Department $department */
         $department = $this->departments->findOrFail($id);
 
         $department->name = $request->get('name');
@@ -98,7 +92,7 @@ class DepartmentController extends Controller
         $department->save();
 
         //Check if need add users in department
-        if($request->get('users')) {
+        if ($request->get('users')) {
             $usersIds = [];
             foreach ($request->get('users') as $userData) {
                 $user = $this->users->findOrFail($userData['id']);
@@ -118,8 +112,9 @@ class DepartmentController extends Controller
      * @return JsonResponse
      * @throws
      */
-    public function delete($id): JsonResponse
+    public function delete(int $id): JsonResponse
     {
+        /** @var Department $department */
         $department = $this->departments->findOrFail($id);
 
         //Remove all users from department

@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use \Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepository;
-use App\Http\Controllers\Api\User\Requests\StoreRequest;
-use App\Http\Controllers\Api\User\Requests\UpdateRequest;
+use App\Http\Requests\Api\User\StoreRequest;
+use App\Http\Requests\Api\User\UpdateRequest;
 
 class UserController extends Controller
 {
-    /**
-     * @var UserRepository
-     */
-    public $users;
+    public UserRepository $users;
 
     public function __construct(UserRepository $users)
     {
@@ -53,7 +51,7 @@ class UserController extends Controller
      */
     public function me(): JsonResponse
     {
-        return response()->json(['user' => \Auth::user()]);
+        return response()->json(['user' => Auth::user()]);
     }
 
     /**
@@ -62,7 +60,7 @@ class UserController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function get($id): JsonResponse
+    public function get(int $id): JsonResponse
     {
         $user = $this->users->findOrFail($id);
 
@@ -78,6 +76,7 @@ class UserController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
+        /** @var User $user */
         $user = $this->users->getModel();
 
         $user->name = $request->get('name');
@@ -97,15 +96,16 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, int $id): JsonResponse
     {
+        /** @var User $user */
         $user = $this->users->findOrFail($id);
 
         $user->name = $request->get('name');
         $user->email = $request->get('email');
 
         //If new password passed
-        if($request->get('password')) {
+        if ($request->get('password')) {
             //Check current user password
-            if($user->id === $id) {
+            if ($user->id === $id) {
                 if (!Hash::check($request->get('current_password'), $user->password)) {
                     return response()->json([
                         'errors' => [
@@ -132,6 +132,7 @@ class UserController extends Controller
      */
     public function delete(int $id): JsonResponse
     {
+        /** @var User $user */
         $user = $this->users->findOrFail($id);
 
         //Remove user from all departments
@@ -140,7 +141,7 @@ class UserController extends Controller
         //Remove user
         $user->delete();
 
-        $users = User::paginate(5);
+        $users = User::query()->paginate(5);
 
         return response()->json(['paginator' => $users]);
     }
